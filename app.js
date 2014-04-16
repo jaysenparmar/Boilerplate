@@ -19,31 +19,8 @@ var conf = {
     client_id:      '231469240376504'
   , client_secret:  'da9ba9f03fcb8d3bf262e9e9a2a08cb1'
   , scope:          'email, user_about_me, user_birthday, user_location'
-  , redirect_uri:   'http://localhost:3000/auth/facebook'
+  , redirect_uri:   'http://infinite-springs-3439.herokuapp.com/auth/facebook'
 };
-
-//database setup - uncomment to set up your database
-//var mongoose = require('mongoose');
-//mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/DATABASE1);
-
-// Configuration
-/* FB GRAPH CONFIGURATION - no express
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure('production', function(){
-  app.use(express.errorHandler());
-}); */
 
 //Configures the Template engine
 app.engine('handlebars', handlebars());
