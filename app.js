@@ -3,24 +3,29 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
-var graph = require('fbgraph'); //fb api
 var app = express();
+//Facebook API
+var graph = require('fbgraph'); 
+//Twitter API
+var twit = require('twit');
+
 var dotenv = require('dotenv');
 dotenv.load();
 
-//route files to load
+//Route files to load
 var index = require('./routes/index');
 var loggedin = require('./routes/loggedin');
 
 
-// this should really be in a config file!
-
+//This should really be in a config file!
 var conf = {
     client_id:      '231469240376504'
   , client_secret:  'da9ba9f03fcb8d3bf262e9e9a2a08cb1'
   , scope:          'email, user_about_me, user_birthday, user_location'
-  , redirect_uri:   'http://infinite-springs-3439.herokuapp.com/auth/facebook'
+//  , redirect_uri:   'http://infinite-springs-3439.herokuapp.com/auth/facebook'
+  , redirect_uri:   'http://localhost:3000/auth/facebook'
 };
+
 
 //Configures the Template engine
 app.engine('handlebars', handlebars());
@@ -29,15 +34,8 @@ app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.bodyParser());
 
-//routes
+//Routes
 app.get('/', index.view);
-app.get('/loggedin', loggedin.info);
-
-// Routes
-
-app.get('/', function(req, res){
-  res.render("index", { title: "click link to connect" });
-});
 
 app.get('/auth/facebook', function(req, res) {
 
@@ -50,9 +48,6 @@ app.get('/auth/facebook', function(req, res) {
       , "scope":         conf.scope
     });
       
-    var cid = conf.scope;
-    console.log(cid);
-
     if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
       res.redirect(authUrl);
     } else {  //req.query.error == 'access_denied'
@@ -69,14 +64,11 @@ app.get('/auth/facebook', function(req, res) {
     , "client_secret":  conf.client_secret
     , "code":           req.query.code
   }, function (err, facebookRes) {
-//app.get('loggedin', loggedin.info);
     res.redirect('/loggedin');
   });
-
-
 });
 
-app.get('loggedin', loggedin.info);
+app.get('/loggedin', loggedin.userinfo);
 
 //set environment ports and start application
 app.set('port', process.env.PORT || 3000);

@@ -1,12 +1,18 @@
 var graph = require('fbgraph');
+var data = {};
 
 exports.view = function(req, res) {
 	res.render('loggedin');
 }
 
-exports.info = function(req, res){ 
+exports.userinfo = function(req, res){ 
     graph.get("/me", function(err, res) {
-  console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
-});
-    res.render('loggedin');
+    //Store user data after stringfying it
+    data = res;
+    //Log returned data
+    console.log(data);
+    //res.render('loggedin', data);
+    });
+    //Return data to the webpage
+    res.render('loggedin', data);
 }
