@@ -9,10 +9,12 @@ var confT = new twit({
   , access_token_secret: 'eotcYuJh37HhyuVvtDG2w0rRdsH3I3cZV8dyLHgit82Pi'
 })
 
+//Render View
 exports.view = function(req, res) {
 	res.render('twitlogin');
 }
 
+//Access Twitter User Info
 exports.twitinfo = function(req, res){
     confT.get('statuses/user_timeline', function(err, res1){
         console.log(res1);

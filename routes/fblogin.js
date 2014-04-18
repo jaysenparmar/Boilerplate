@@ -15,10 +15,9 @@ exports.view = function(req, res) {
 	res.render('fblogin');
 }
 
-
+//Facebook Authentication
 exports.fbauth = function(req, res) {
 
-  // Redirect to the oauth dialog
   if (!req.query.code) {
     var authUrl = graph.getOauthUrl({
         "client_id":     conf.client_id
@@ -26,9 +25,9 @@ exports.fbauth = function(req, res) {
       , "scope":         conf.scope
     });
       
-    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
+    if (!req.query.error) {
       res.redirect(authUrl);
-    } else {  //req.query.error == 'access_denied'
+    } else {
       res.send('access denied');
     }
     return;
@@ -44,18 +43,16 @@ exports.fbauth = function(req, res) {
   }, function (err, facebookRes) {
     res.redirect('/fblogin');
   });
-}
+    
+}//end funct
 
 
-//Access user info
+//Access FB User Info
 exports.fbinfo = function(req, res){
     
-    graph.get("/me", function(err, response) {
+    graph.get("/me", function(err, res1) {
        console.log(response);
-       //var data  = [];
-       //data = res;
-      //pass data off to view function    
-       res.render('fblogin',response);
+       res.render('fblogin',res1);
     });
     
-}
+}//end funct
