@@ -5,14 +5,16 @@ exports.view = function(req, res) {
 	res.render('loggedin');
 }
 
-exports.userinfo = function(req, res){ 
+exports.userinfo = function(req, res){
+    
     graph.get("/me", function(err, res) {
-    //Store user data after stringfying it
-    data = res;
-    //Log returned data
-    console.log(data);
-    //res.render('loggedin', data);
+       //console.log(res);
+       data = res;
+      //pass data off to view function
+        
+       //res.render('loggedin', data);
     });
     //Return data to the webpage
-    res.render('loggedin', data);
+    res.render('loggedin');
+    
 }
