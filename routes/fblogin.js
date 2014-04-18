@@ -51,7 +51,7 @@ exports.fbauth = function(req, res) {
 exports.fbinfo = function(req, res){
     
     graph.get("/me", function(err, res1) {
-       console.log(response);
+       console.log(res1);
        res.render('fblogin',res1);
     });
     
