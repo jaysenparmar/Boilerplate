@@ -4,35 +4,15 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
 var app = express();
-//Facebook API
-var graph = require('fbgraph'); 
-//Twitter API
-var twit = require('twit');
+
 
 var dotenv = require('dotenv');
 dotenv.load();
 
 //Route files to load
 var index = require('./routes/index');
-var loggedin = require('./routes/loggedin');
-
-
-//Key information for Facebook
-var conf = {
-    client_id:      '231469240376504'
-  , client_secret:  'da9ba9f03fcb8d3bf262e9e9a2a08cb1'
-  , scope:          'email, user_about_me, user_birthday, user_location'
-  , redirect_uri:   'http://infinite-springs-3439.herokuapp.com/auth/facebook'
-  //, redirect_uri:   'http://localhost:3000/auth/facebook'
-};
-
-//Key information for Twitter
-var confT = new twit({
-    consumer_key: 'HOSKuM9rXuqd8MGlnqP5xbR8y'
-  , consumer_secret: 'V06BmWT7psO7O2LHP0xtzKLPqk0OSgzIFYVqGg4YGgdURlKSLU'
-  , access_token: '2444800346-6itow6Vgy7dZtrwPp7CsqbUmCWn7NDoarDxkL2p'
-  , access_token_secret: 'eotcYuJh37HhyuVvtDG2w0rRdsH3I3cZV8dyLHgit82Pi'
-})
+var fblogin = require('./routes/fblogin');
+var twitlogin = require('./routes/twitlogin');
 
 //Configures the Template engine
 app.engine('handlebars', handlebars());
@@ -45,45 +25,13 @@ app.use(express.bodyParser());
 app.get('/', index.view);
 app.post('/', index.view);
 
-app.get('/auth/facebook', function(req, res) {
+//Facebook Authentication and Information Methods
+app.get('/auth/facebook', fblogin.fbauth);
+app.get('/fblogin', fblogin.fbinfo);
 
-  // we don't have a code yet
-  // so we'll redirect to the oauth dialog
-  if (!req.query.code) {
-    var authUrl = graph.getOauthUrl({
-        "client_id":     conf.client_id
-      , "redirect_uri":  conf.redirect_uri
-      , "scope":         conf.scope
-    });
-      
-    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
-      res.redirect(authUrl);
-    } else {  //req.query.error == 'access_denied'
-      res.send('access denied');
-    }
-    return;
-  }
+//Twitter Information Methods
+app.get('/auth/twitter', twitlogin.twitinfo);
 
-  // code is set
-  // we'll send that and get the access token
-  graph.authorize({
-      "client_id":      conf.client_id
-    , "redirect_uri":   conf.redirect_uri
-    , "client_secret":  conf.client_secret
-    , "code":           req.query.code
-  }, function (err, facebookRes) {
-    res.redirect('/loggedin');
-  });
-});
-
-app.get('/auth/twitter', function(req, res){
-    confT.get('statuses/user_timeline', function(err, res1){
-        console.log(res1);
-        res.send(res1);        
-    });
-});
-
-app.get('/loggedin', loggedin.userinfo);
 
 //set environment ports and start application
 app.set('port', process.env.PORT || 3000);
