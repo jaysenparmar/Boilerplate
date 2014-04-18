@@ -22,21 +22,10 @@ var conf = {
     client_id:      '231469240376504'
   , client_secret:  'da9ba9f03fcb8d3bf262e9e9a2a08cb1'
   , scope:          'email, user_about_me, user_birthday, user_location'
-  , redirect_uri:   'http://infinite-springs-3439.herokuapp.com/auth/facebook'
-//  , redirect_uri:   'http://localhost:3000/auth/facebook'
+  //, redirect_uri:   'http://infinite-springs-3439.herokuapp.com/auth/facebook'
+  , redirect_uri:   'http://localhost:3000/auth/facebook'
 };
 
-/*
-//Key information for Twitter
-var confT = new twit({
-    consumer_key:         'HOSKuM9rXuqd8MGlnqP5xbR8y'
-  , consumer_secret:      'V06BmWT7psO7O2LHP0xtzKLPqk0OSgzIFYVqGg4YGgdURlKSLU'
-  , access_token:         '2444800346-6itow6Vgy7dZtrwPp7CsqbUmCWn7NDoarDxkL2p'
-  , access_token_secret:  'eotcYuJh37HhyuVvtDG2w0rRdsH3I3cZV8dyLHgit82Pi'
-  //, redirect_uri:         'http://infinite-springs-3439.herokuapp.com/auth/twitter'
-  , redirect_uri:         'http://localhost:3000/auth/twitter' 
-})
-*/
 
 //Configures the Template engine
 app.engine('handlebars', handlebars());
@@ -78,19 +67,6 @@ app.get('/auth/facebook', function(req, res) {
     res.redirect('/loggedin');
   });
 });
-
-/*
-app.get('/auth/twitter', function(req, res){
-    
-    var twitA = confT.getOauthUrl({
-        "consumer_key": confT.consumer_key
-        , "consumer_secret": confT.consumer_secret    
-        , "redirect_uri": confT.redirect_uri
-    });
-    
-    //console.log(twitA);
-    res.redirect('/loggedin');
-});*/
 
 app.get('/loggedin', loggedin.userinfo);
 

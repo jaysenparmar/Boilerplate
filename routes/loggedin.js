@@ -1,5 +1,4 @@
 var graph = require('fbgraph');
-var data = {};
 
 exports.view = function(req, res) {
 	res.render('loggedin');
@@ -8,10 +7,10 @@ exports.view = function(req, res) {
 exports.userinfo = function(req, res){
     
     graph.get("/me", function(err, res) {
-       //console.log(res);
+       //console.log(res);\
+       var data  = [];
        data = res;
-      //pass data off to view function
-        
+      //pass data off to view function    
        //res.render('loggedin', data);
     });
     //Return data to the webpage
