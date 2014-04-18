@@ -17,7 +17,10 @@ exports.view = function(req, res) {
 //Access Twitter User Info
 exports.twitinfo = function(req, res){
     confT.get('statuses/user_timeline', function(err, res1){
-        console.log(res1);
-        res.send(res1);    
+        //console.log(res1);
+        //res.send(res1);   
+        var data = [];
+        data = res1;
+        res.render('twitlogin', data[0]);
     });
 }
