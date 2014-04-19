@@ -59,11 +59,21 @@ exports.fbinfo = function(req, res){
 
 //Access FB User's Friends
 exports.fbfriends = function(req, res){
-    
-    graph.get("/me/friends", function(err, res1) {
+
+    graph.get("/me/friends?fields=name,gender,relationship_status", function(err, res1) {        
        var friends = [];
+       var singles = [];
        friends = res1;
-       //console.log(res1);
+    
+       //Push single people to single array
+       for(var i = 0; i < friends.data.length; i++){
+           if(friends.data[i].relationship_status=="Single"){
+                singles.push(friends.data[i]);
+           }
+       }
+        
+       friends.data = singles;
+       //console.log(singles);
        res.render('match', friends);
     });
     

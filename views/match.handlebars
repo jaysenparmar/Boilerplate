@@ -25,9 +25,10 @@
     <div class="container" align="center">
         <h2>Here is a list of your potential matches:</h2>
     </div>
-  
+    <br>
     {{#each data}}
-    <div align="center">{{name}} </div>
+    <div align="center"><b>Name: </b>{{name}} <b>  Gender: </b> {{gender}} <b>  Status: </b>{{relationship_status}} </div>
+    <br>
     {{/each}}
     
     <script src="https://code.jquery.com/jquery.js"></script>
