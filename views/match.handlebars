@@ -23,17 +23,12 @@
     </div>
     
     <div class="container" align="center">
-        <h2> Welcome {{name}}, you are now successfully logged in with Facebook!</h2>
+        <h2>Here is a list of your potential matches:</h2>
     </div>
-    
-    <div class="container">
-        <h3>About You</h3>
-        <p><b> Gender: </b> {{gender}}</p>
-        <p><b> Birthday: </b> {{birthday}}</p>
-        <p><b> Location: </b> {{location.name}}</p>
-    </div>
-    
-    <a href="/match">Find me single people!</a>
+  
+    {{#each data}}
+    <div align="center">{{name}} </div>
+    {{/each}}
     
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.js"></script>

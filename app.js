@@ -28,7 +28,7 @@ app.post('/', index.view);
 //Facebook Authentication and Information Methods
 app.get('/auth/facebook', fblogin.fbauth);
 app.get('/fblogin', fblogin.fbinfo);
-app.get('/fblogin', fblogin.fbphoto);
+app.get('/match', fblogin.fbfriends);
 
 //Twitter Information Methods
 app.get('/auth/twitter', twitlogin.twitinfo);
