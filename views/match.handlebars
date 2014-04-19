@@ -26,10 +26,18 @@
         <h2>Here's a list of single people you know:</h2>
     </div>
     <br>
+    <table class="table-striped" align="center">
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Status</th>
+        </tr>
     {{#each data}}
-    <div align="center"><b>Name: </b>{{name}} <b>  Gender: </b> {{gender}} <b>  Status: </b>{{relationship_status}} </b></div>
-    <br>
+        <tr>
+    <td>{{name}} </td> <td> {{gender}} </td>  <td>{{relationship_status}} </td>
+    </tr
     {{/each}}
+    </table>
     
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
