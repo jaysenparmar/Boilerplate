@@ -5,9 +5,9 @@ var graph = require('fbgraph');
 var conf = {
     client_id:      '231469240376504'
   , client_secret:  'da9ba9f03fcb8d3bf262e9e9a2a08cb1'
-  , scope:          'user_about_me, user_birthday, user_location, friends_relationships'
-  //, redirect_uri:   'http://infinite-springs-3439.herokuapp.com/auth/facebook'
-  , redirect_uri:   'http://localhost:3000/auth/facebook'
+  , scope:          'user_about_me, user_birthday, user_location, user_likes, friends_relationships, friends_likes'
+  , redirect_uri:   'http://infinite-springs-3439.herokuapp.com/auth/facebook'
+  //, redirect_uri:   'http://localhost:3000/auth/facebook'
 };
 
 //Render View
@@ -50,8 +50,19 @@ exports.fbauth = function(req, res) {
 //Access FB User Info
 exports.fbinfo = function(req, res){
     
-    graph.get("/me", function(err, res1) {
-       //console.log(res1);
+    graph.get("/me?fields=name,gender,birthday,location,likes", function(err, res1) {
+       //console.log(res1.likes.data[0].name);
+        var mydata = [];
+        var mylikes = [];
+        mydata = res1;
+        
+        for(var i = 0; i < mydata.likes.data.length; i++){
+            //console.log(mydata.likes.data[i].name);
+            mylikes.push(mydata.likes.data[i].name);        
+        }
+        //console.log(mylikes);
+        res1.likes = mylikes;
+        //console.log(res1.likes);
        res.render('fblogin', res1);
     });
     
@@ -71,9 +82,8 @@ exports.fbfriends = function(req, res){
                 singles.push(friends.data[i]);
            }
        }
-        
        friends.data = singles;
-       //console.log(singles);
+       //console.log(friends);
        res.render('match', friends);
     });
     
