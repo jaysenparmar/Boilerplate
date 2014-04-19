@@ -21,6 +21,14 @@ exports.twitinfo = function(req, res){
         //res.send(res1);   
         var data = [];
         data = res1;
+        console.log(data);
+        /*
+        var stream = T.stream('statuses/filter', { track: 'single' })
+
+stream.on('tweet', function (tweet) {
+  console.log(tweet)
+})*/
+
         res.render('twitlogin', data[0]);
     });
 }
