@@ -33,12 +33,12 @@ app.get('/fblogin', fblogin.fbinfo);
 app.get('/match', fblogin.fbfriends);
 //Twitter Information Methods
 app.get('/auth/twitter', twitlogin.twitinfo);
-//app.get('/visualize', visualize.view);
-app.get('/visualize', function(req,res){
+app.get('/visualize', visualize.view);
+app.get('/visualize/d3', function(req,res){
     var data = [
     {"name":"A","value":"5"},
-    //{"name":"B","value":"2"},
-    //{"name":"C","value":"9"}
+    {"name":"B","value":"2"},
+    {"name":"C","value":"9"}
 	];
     res.json(data);
 });

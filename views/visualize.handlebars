@@ -89,9 +89,9 @@
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      d3.json('/visualize', function(error, data) {
+      d3.json('/visualize/d3', function(error, data) {
         x.domain(data.map(function(d) { return d.name; }));
-        y.domain([0, d3.max(data, function(d) { console.log(d.posts); return d.posts; })]);
+        y.domain([0, d3.max(data, function(d) { console.log(d.value); return d.value; })]);
 
         svg.append("g")
         .attr("class", "x axis")
@@ -106,7 +106,7 @@
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Posts");
+        .text("Value");
         svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
@@ -114,8 +114,8 @@
         .attr("onclick", function(d){return "window.location='".concat(d.name, "'");})
         .attr("x", function(d) { return x(d.name); })
         .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.posts); })
-        .attr("height", function(d) { return height - y(d.posts); });
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); });
   
 
 
@@ -130,7 +130,7 @@
 
     // Copy-on-write since tweens are evaluated after a delay.
     var x0 = x.domain(data.sort(this.checked
-      ? function(a, b) { return b.posts - a.posts; }
+      ? function(a, b) { return b.value - a.value; }
       : function(a, b) { return d3.ascending(a.name, b.name); })
     .map(function(d) { return d.name; }))
     .copy();
