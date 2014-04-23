@@ -6,8 +6,8 @@ var conf = {
     client_id:      '231469240376504'
   , client_secret:  'da9ba9f03fcb8d3bf262e9e9a2a08cb1'
   , scope:          'user_about_me, user_birthday, user_location, user_likes, user_status, friends_relationships, friends_likes'
-  , redirect_uri:   'http://safe-beyond-4638.herokuapp.com/auth/facebook'
-  //, redirect_uri:   'http://localhost:3000/auth/facebook'
+  //, redirect_uri:   'http://safe-beyond-4638.herokuapp.com/auth/facebook'
+  , redirect_uri:   'http://localhost:3000/auth/facebook'
 };
 
 //Render View
@@ -65,14 +65,14 @@ exports.fbinfo = function(req, res){
         res1.likes = mylikes;
         //console.log(res1.likes);
         
-        console.log(res1);
+        //console.log(res1);
         for(var i = 0; i < mydata.statuses.data.length; i++){
             //console.log(mydata.likes.data[i].name);
             mystatuses.push(mydata.statuses.data[i].message);        
         }
-        console.log(mystatuses);
+        //console.log(mystatuses);
         res1.statuses = mystatuses;
-        console.log(res1.statuses);
+        //console.log(res1.statuses);
        res.render('fblogin', res1);
     });
     

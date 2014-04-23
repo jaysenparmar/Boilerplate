@@ -13,6 +13,8 @@ dotenv.load();
 var index = require('./routes/index');
 var fblogin = require('./routes/fblogin');
 var twitlogin = require('./routes/twitlogin');
+var visualize = require('./routes/visualize');
+
 
 //Configures the Template engine
 app.engine('handlebars', handlebars());
@@ -29,9 +31,15 @@ app.post('/', index.view);
 app.get('/auth/facebook', fblogin.fbauth);
 app.get('/fblogin', fblogin.fbinfo);
 app.get('/match', fblogin.fbfriends);
-
 //Twitter Information Methods
 app.get('/auth/twitter', twitlogin.twitinfo);
+app.get('/visualize', function(req,res){
+	var data = [
+    {"name":"A","value":"5"}
+	];
+	console.log(data);
+	res.render('visualize', data);
+});
 
 
 //set environment ports and start application
