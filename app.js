@@ -33,13 +33,8 @@ app.get('/fblogin', fblogin.fbinfo);
 app.get('/match', fblogin.fbfriends);
 //Twitter Information Methods
 app.get('/auth/twitter', twitlogin.twitinfo);
-app.get('/visualize', function(req,res){
-	var data = [
-    {"name":"A","value":"5"}
-	];
-	console.log(data);
-	res.render('visualize', data);
-});
+app.get('/visualize', visualize.dthree);
+
 
 
 //set environment ports and start application

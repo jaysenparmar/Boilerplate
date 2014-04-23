@@ -47,7 +47,10 @@
             .attr("width", width)
             .attr("height", height);
 
-        d3.json("data.json", type, function(error, data) {
+        var data = [
+    {"name":"A","value":"5"}
+	];
+        d3.json(data, type, function(error, data) {
           console.log('Finding data file');
           x.domain(data.map(function(d) { console.log d.name; return d.name; }));
           y.domain([0, d3.max(data, function(d) { console.log d.value; return d.value; })]);
