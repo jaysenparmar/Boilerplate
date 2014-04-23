@@ -2,9 +2,12 @@
 
 <html>
 <head>
-  <title>DateFinder - Visualize</title>  
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DateFinder - Visualizer</title>	
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -13,69 +16,140 @@
       <![endif]-->        
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
       <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
-      <script src="https://code.jquery.com/jquery.js"></script>
+       <script src="https://code.jquery.com/jquery.js"></script>
       <script src="js/bootstrap.js"></script>
-     
-      <style>
-        .chart rect {
-          fill: blue;
-        }
 
-        .chart text {
-          fill: white;
-          font: 10px sans-serif;
-          text-anchor: middle;
-        }
+      <style>
+
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: relative;
+        width: 960px;
+      }
+
+      .axis text {
+        font: 10px sans-serif;
+      }
+
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
+
+      .bar {
+        fill: steelblue;
+        fill-opacity: .9;
+      }
+
+      .x.axis path {
+        display: none;
+      }
+
+      label {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
       </style>
-      </head>
-      <body>
-      <h3>Here are your matches visualized</h3>
-      <svg class="chart"></svg>
+    </head>
+
+    <body>
+      <div>
+        <h3>I need to render data homie</h3>
+      </div>
+      <div class="col-md-9" role="main">
       <script src="js/d3.js" charset="utf-8"></script>
       <script>
-       console.log("Hello dude");
-        var width = 960,
-            height = 500;
+      //d3 code, will be in commit 
+      var margin = {top: 20, right: 20, bottom: 30, left: 40},
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+    
 
-        var x = d3.scale.ordinal()
-            .rangeRoundBands([0, width], .1);
+      var x = d3.scale.ordinal()
+      .rangeRoundBands([0, width], .1, 1);
 
-        var y = d3.scale.linear()
-            .range([height, 0]);
+      var y = d3.scale.linear()
+      .range([height, 0]);
 
-        var chart = d3.select(".chart")
-            .attr("width", width)
-            .attr("height", height);
+      var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
 
-        var data = [
-    {"name":"A","value":"5"}
-	];
-        d3.json(data, type, function(error, data) {
-          console.log('Finding data file');
-          x.domain(data.map(function(d) { console.log d.name; return d.name; }));
-          y.domain([0, d3.max(data, function(d) { console.log d.value; return d.value; })]);
+      var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left");
 
-          var bar = chart.selectAll("g")
-              .data(data)
-            .enter().append("g")
-              .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
+      var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-          bar.append("rect")
-              .attr("y", function(d) { return y(d.value); })
-              .attr("height", function(d) { return height - y(d.value); })
-              .attr("width", x.rangeBand());
+      d3.json('/visualize', function(error, data) {
+        x.domain(data.map(function(d) { return d.name; }));
+        y.domain([0, d3.max(data, function(d) { console.log(d.posts); return d.posts; })]);
 
-          bar.append("text")
-              .attr("x", x.rangeBand() / 2)
-              .attr("y", function(d) { return y(d.value) + 3; })
-              .attr("dy", ".75em")
-              .text(function(d) { return d.value; });
-        });
+        svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
 
-        function type(d) {
-          d.value = +d.value; // coerce to number
-          return d;
-        }
-      </script>
+        svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Posts");
+        svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("onclick", function(d){return "window.location='".concat(d.name, "'");})
+        .attr("x", function(d) { return x(d.name); })
+        .attr("width", x.rangeBand())
+        .attr("y", function(d) { return y(d.posts); })
+        .attr("height", function(d) { return height - y(d.posts); });
+  
+
+
+        d3.select("input").on("change", change);
+
+        var sortTimeout = setTimeout(function() {
+          d3.select("input").property("checked", true).each(change);
+        }, 2000);
+
+        function change() {
+          clearTimeout(sortTimeout);
+
+    // Copy-on-write since tweens are evaluated after a delay.
+    var x0 = x.domain(data.sort(this.checked
+      ? function(a, b) { return b.posts - a.posts; }
+      : function(a, b) { return d3.ascending(a.name, b.name); })
+    .map(function(d) { return d.name; }))
+    .copy();
+
+    var transition = svg.transition().duration(750),
+    delay = function(d, i) { return i * 50; };
+
+    transition.selectAll(".bar")
+    .delay(delay)
+    .attr("x", function(d) { return x0(d.name); });
+
+    transition.select(".x.axis")
+    .call(xAxis)
+    .selectAll("g")
+    .delay(delay);
+  }
+});
+
+</script>
+</div>
 </body>
 </html>
