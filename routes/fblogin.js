@@ -96,5 +96,36 @@ exports.fbfriends = function(req, res){
        //console.log(friends);
        res.render('match', friends);
     });
-    
-}//end funct
+}
+
+//Render Data
+exports.fbdata = function(req,res){
+  graph.get("/me/friends?fields=name,gender,relationship_status", function(err, res1) {        
+       var friends = [];
+       var numSingles = 0;
+       var numMales = 0;
+       var numFemales = 0;
+      
+      friends = res1;
+      console.log(friends);
+       //Push single people to single array
+       for(var i = 0; i < friends.data.length; i++){
+           if(friends.data[i].relationship_status=="Single"){
+               numSingles++;
+               //if males, inc male ctr
+               if(friends.data[i].gender == "male"){
+                    numMales++;
+               }
+               //if female, inc female ctr
+               else if(friends.data[i].gender == "female"){
+                    numFemales++;
+               }
+           }
+       }    
+       var singles = [{"sex": "Male", "number": numMales},
+                   {"sex": "Female", "number": numFemales}];
+      //Push data to singles json obj.
+      //console.log(singles);
+      res.json(singles);
+    });
+}

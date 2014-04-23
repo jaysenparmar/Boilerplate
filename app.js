@@ -33,16 +33,9 @@ app.get('/fblogin', fblogin.fbinfo);
 app.get('/match', fblogin.fbfriends);
 //Twitter Information Methods
 app.get('/auth/twitter', twitlogin.twitinfo);
+//Visualize data in D3
 app.get('/visualize', visualize.view);
-app.get('/visualize/d3', function(req,res){
-    var data = [
-    {"name":"A","value":"5"},
-    {"name":"B","value":"2"},
-    {"name":"C","value":"9"}
-	];
-    res.json(data);
-});
-
+app.get('/visualize/d3', fblogin.fbdata);
 
 
 //set environment ports and start application

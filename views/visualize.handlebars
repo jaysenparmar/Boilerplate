@@ -90,8 +90,8 @@
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       d3.json('/visualize/d3', function(error, data) {
-        x.domain(data.map(function(d) { return d.name; }));
-        y.domain([0, d3.max(data, function(d) { console.log(d.value); return d.value; })]);
+        x.domain(data.map(function(d) { return d.sex; }));
+        y.domain([0, d3.max(data, function(d) { console.log(d.number); return d.number; })]);
 
         svg.append("g")
         .attr("class", "x axis")
@@ -106,16 +106,16 @@
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Value");
+        .text("Number");
         svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
         .attr("class", "bar")
-        .attr("onclick", function(d){return "window.location='".concat(d.name, "'");})
-        .attr("x", function(d) { return x(d.name); })
+        .attr("onclick", function(d){return "window.location='".concat(d.sex, "'");})
+        .attr("x", function(d) { return x(d.sex); })
         .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); });
+        .attr("y", function(d) { return y(d.number); })
+        .attr("height", function(d) { return height - y(d.number); });
   
 
 
@@ -130,9 +130,9 @@
 
     // Copy-on-write since tweens are evaluated after a delay.
     var x0 = x.domain(data.sort(this.checked
-      ? function(a, b) { return b.value - a.value; }
-      : function(a, b) { return d3.ascending(a.name, b.name); })
-    .map(function(d) { return d.name; }))
+      ? function(a, b) { return b.number - a.number; }
+      : function(a, b) { return d3.ascending(a.sex, b.sex); })
+    .map(function(d) { return d.sex; }))
     .copy();
 
     var transition = svg.transition().duration(750),
@@ -140,7 +140,7 @@
 
     transition.selectAll(".bar")
     .delay(delay)
-    .attr("x", function(d) { return x0(d.name); });
+    .attr("x", function(d) { return x0(d.sex); });
 
     transition.select(".x.axis")
     .call(xAxis)
