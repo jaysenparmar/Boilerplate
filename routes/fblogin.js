@@ -105,11 +105,13 @@ exports.fbdata = function(req,res){
        var numSingles = 0;
        var numMales = 0;
        var numFemales = 0;
-      
+       var totalFriends = 0;
       friends = res1;
-      console.log(friends);
+      
+      //console.log(friends);
        //Push single people to single array
        for(var i = 0; i < friends.data.length; i++){
+           totalFriends++;
            if(friends.data[i].relationship_status=="Single"){
                numSingles++;
                //if males, inc male ctr
@@ -122,9 +124,10 @@ exports.fbdata = function(req,res){
                }
            }
        }    
-       var singles = [{"sex": "Male", "number": numMales},
+      var singles = [{"sex": "Male", "number": numMales},
                    {"sex": "Female", "number": numFemales}];
       //Push data to singles json obj.
+      console.log("Total Friends: " + totalFriends + ", " + "Single Friends: " + numSingles); 
       //console.log(singles);
       res.json(singles);
     });
