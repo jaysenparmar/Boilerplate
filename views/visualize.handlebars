@@ -37,19 +37,25 @@ text {
       </style>
     </head>
 
-    <body align="center">
-      <div class="container">
+    <body>
+        <nav class="navbar navbar-inverse" role="navigation">
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+          <ul class="nav navbar-nav">
+            <li><a href="/fblogin">Home</a></a></li>
+            <li><a href="/match">Find Singles</a></li>
+            <li class="active"><a href="/visualize">Visualize Data </a></li>
+          </ul>
+        </div>
+</nav>
+      <div class="container" align="center">
         <h3>Breakdown of your Facebook Friends' Relationship Status</h3>
-          <div class="foo" id="foo"> test
-          <img src="/img/active.png">
-          </div>
       </div>
       <div class="col-md-9" role="main">
       <script src="js/d3.js" charset="utf-8"></script>
 <script>
 
-var width = 700,
-    height = 660,
+var width = 900,
+    height = 700,
     radius = Math.min(width, height) / 2;
 
 var x = d3.scale.linear()
@@ -90,7 +96,7 @@ d3.json("/visualize/d3", function(error, root) {
     .attr("x", function(d) { return y(d.y); })
     .attr("dx", "6") // margin
     .attr("dy", ".35em") // vertical-align
-    .text(function(d) { $("#foo").hide();return d.name + ", " + d.size; });
+    .text(function(d) { return d.name + ", " + d.size; });
 
   function click(d) {
     // fade out all text elements
