@@ -51,11 +51,12 @@ exports.fbauth = function(req, res) {
 //Access FB User Info
 exports.fbinfo = function(req, res){
     
-    graph.get("/me?fields=name,gender,birthday,location,likes,statuses", function(err, res1) {
+    graph.get("/me?fields=name,gender,birthday,location,likes,statuses, picture", function(err, res1) {
        //console.log(res1.likes.data[0].name);
         var mydata = [];
         var mylikes = [];
         var mystatuses = [];
+        
         mydata = res1;
         
         for(var i = 0; i < mydata.likes.data.length; i++){
@@ -74,6 +75,12 @@ exports.fbinfo = function(req, res){
         //console.log(mystatuses);
         res1.statuses = mystatuses;
         //console.log(res1.statuses);
+
+       var picture = mydata.picture.data.url;
+        
+        res1.picture = picture;
+        
+        console.log(res1);
        res.render('fblogin', res1);
     });
     

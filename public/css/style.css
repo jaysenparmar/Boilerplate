@@ -1,0 +1,57 @@
+body{
+    padding: 15px;
+    background-color: #26677b;
+    font-family: 'Open Sans', 'sans-serif';
+    color: white;
+}
+
+
+h1, h4, h6{
+    color:white;
+    font: Lato;
+    font-weight: 600;
+}
+
+h6{
+    font-weight: 400;
+}
+
+.signin p{
+    margin: 5px auto;
+    font-size: .85em;
+    width: 200px;
+    color: #222;
+    
+}
+
+.navbar .active{
+    border-bottom:2px solid #fff;
+    
+}
+
+.login{
+    background-color: #14BBA1;
+    padding: 5px;
+    color:white;
+    width: 280px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    margin-bottom: 20px;
+    
+    
+}
+
+.profilepic{
+    border-radius:100px;
+    
+}
+
+.signin{
+    background-color: #e6e6e6;
+    width: 280px;
+    height: 150px;
+    border-radius: 3px;
+    margin: 70px auto;
+    text-align: center;
+    
+}
