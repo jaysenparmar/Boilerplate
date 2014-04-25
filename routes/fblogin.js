@@ -162,7 +162,6 @@ exports.fbdata = function(req,res){
                   }]
           };
                   
-
       //Push data to singles json obj.
       //console.log("Total Friends: " + totalFriends + ", Single Friends: " + numSingles + " M/F: " + numSMales + "/" +numSFemales+ ", Taken Friends: " + numTaken + " M/F: " + numTMales + "/" + numTFemales); 
       res.json(data);

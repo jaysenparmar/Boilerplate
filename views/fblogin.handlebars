@@ -19,7 +19,7 @@
 
 <body>
     <div class="jumbotron" align="center">
-      	<h1>Welcome to DateFinder</h1>
+      	<h1>DateFinder</h1>
     </div>
     
     <div class="container" align="center">
@@ -27,20 +27,19 @@
     </div>
     
     <div class="container">
-        <h3>About You</h3>
-        <p class="text-justify"><b> Gender: </b> <small>{{gender}}</small></p>
-        <p class="text-justify"><b> Birthday: </b> <small>{{birthday}}</small></p>
-        <p class="text-justify"><b> Location: </b> <small>{{location.name}}</small></p>
-        <p class="text-justify"><b> Interests: </b> <small>{{likes}}</small></p>
-        <p class="text-justify"><b> Posts:</b> <small>{{statuses}}</small></p>
-        </p>
+        <div class="bg-warning">
+            <h3>About You</h3>
+            <p><b> Gender: </b> <small>{{gender}}</small></p>
+            <p><b> Birthday: </b> <small>{{birthday}}</small></p>
+            <p><b> Location: </b> <small>{{location.name}}</small></p>
+            <p><b> Interests: </b> <small>{{likes}}</small></p>
+            <p><b> Posts:</b> <small>{{statuses}}</small></p>
+        </div>
     </div>
     <br>
-    <div align="center"><a href="/match" class="btn btn-primary bt-lg primary">Find me single people!</a></div>
+    <div align="center"><a href="/match" class="btn btn-success bt-lg success"><b>Find me Singles!</b></a></div>
     <br>
     <br>
-    
-    
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 </body>
