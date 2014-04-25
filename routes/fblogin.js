@@ -103,10 +103,12 @@ exports.fbdata = function(req,res){
   graph.get("/me/friends?fields=name,gender,relationship_status", function(err, res1) {        
        var friends = [];
        var numSingles = 0;
-       var numMales = 0;
-       var numFemales = 0;
+       var numSMales = 0;
+       var numSFemales = 0;
+       var numTMales = 0;
+       var numTFemales = 0;
        var totalFriends = 0;
-      friends = res1;
+       friends = res1;
       
       //console.log(friends);
        //Push single people to single array
@@ -116,19 +118,52 @@ exports.fbdata = function(req,res){
                numSingles++;
                //if males, inc male ctr
                if(friends.data[i].gender == "male"){
-                    numMales++;
+                    numSMales++;
                }
                //if female, inc female ctr
                else if(friends.data[i].gender == "female"){
-                    numFemales++;
+                    numSFemales++;
                }
            }
-       }    
-      var singles = [{"sex": "Male", "number": numMales},
-                   {"sex": "Female", "number": numFemales}];
+            else if(friends.data[i].relationship_status!="Single"){
+                //if males, inc male ctr
+               if(friends.data[i].gender == "male"){
+                    numTMales++;
+               }
+               //if female, inc female ctr
+               else if(friends.data[i].gender == "female"){
+                    numTFemales++;
+               }
+                
+            }
+           }
+      
+       //Number of friends in a relationship
+       var numTaken = totalFriends - numSingles;
+ 
+      var data = 
+          {
+            "name": "Total Friends", "size": totalFriends,
+              "children":[
+                  {
+                    "name":"Singles", "size": numSingles,
+                    "children": [
+                        { "name": "Males", "size": numSMales},
+                        { "name": "Females", "size": numSFemales}
+                    ]
+                  },
+                  {
+                    "name":"Taken", "size": numTaken,
+                    "children": [
+                        { "name": "Males", "size": numTMales},
+                        { "name": "Females", "size": numTFemales}
+                    ]
+                  }]
+          };
+                  
+
       //Push data to singles json obj.
-      console.log("Total Friends: " + totalFriends + ", " + "Single Friends: " + numSingles); 
-      //console.log(singles);
-      res.json(singles);
+      //console.log("Total Friends: " + totalFriends + ", Single Friends: " + numSingles + " M/F: " + numSMales + "/" +numSFemales+ ", Taken Friends: " + numTaken + " M/F: " + numTMales + "/" + numTFemales); 
+      res.json(data);
     });
 }
