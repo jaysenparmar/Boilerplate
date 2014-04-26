@@ -7,7 +7,7 @@ var conf = {
   , client_secret:  'da9ba9f03fcb8d3bf262e9e9a2a08cb1'
   , scope:          'user_about_me, user_birthday, user_location, user_likes, user_status, friends_relationships, friends_likes'
   //, redirect_uri:   'http://localhost:3000/auth/facebook'
-    , redirect_uri:   'http://arcane-retreat-8055.herokuapp.com/auth/facebook'
+    , redirect_uri:   'http://pure-atoll-8846.herokuapp.com/auth/facebook'
 };
 
 //Render View
